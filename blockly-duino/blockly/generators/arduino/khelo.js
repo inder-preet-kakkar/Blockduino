@@ -2,6 +2,36 @@ goog.provide('Blockly.Arduino.khelo');
 	
 goog.require('Blockly.Arduino');
 
+
+Blockly.Arduino['khelo_proximity_options'] = function(block) {
+  var dropdown_range = block.getFieldValue('Range');
+  var r1;
+  var r2;
+  if(dropdown_range === "0-3")
+  {
+	  r1=900;
+	  r2=800;
+  }
+  if(dropdown_range === "3-6")
+  {
+	  r1=800;
+	  r2=700;
+  }
+  if(dropdown_range === "6-9")
+  {
+	  r1=700;
+	  r2=600;
+  }
+  
+  var dropdown_pin_options = block.getFieldValue('pin_options');
+  var statements_do = Blockly.Arduino.statementToCode(block, 'Do');
+  Blockly.Arduino.setups_['setup_input_' + dropdown_pin_options]= 'pinMode(' + dropdown_pin_options + ', INPUT);';
+  // TODO: Assemble Arduino into code variable.
+  var code = 'if(analogRead('+dropdown_pin_options+')>'+r2+' && analogRead('+dropdown_pin_options+')<'+r1+')\n{\n'+statements_do+'\n}\n';
+  return code;
+};
+
+
 Blockly.Arduino['khelo_keyboard'] = function(block) {
   var dropdown_pin_options = block.getFieldValue('pin_options');
   Blockly.Arduino.definitions_['define_keyboard'] = '#include <Keyboard.h>\n';
@@ -208,7 +238,7 @@ Blockly.Arduino['khelo_touch'] = function(block) {
   }
   if(dropdown_pin_options === "4 and 7")
   {
-	  pin_line2='4';
+	  pin_line1='4';
 	  pin_line2='7';
   }
   Blockly.Arduino.setups_['setup_input']= 'pinMode('+pin_line1+',INPUT);\n pinMode('+pin_line2+',INPUT);';

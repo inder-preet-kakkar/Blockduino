@@ -4,6 +4,25 @@ goog.require('Blockly.Blocks');
 
 Blockly.Blocks.khelo.HUE = 270;
 
+
+Blockly.Blocks['khelo_proximity_options'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("If proximity is between")
+        .appendField(new Blockly.FieldDropdown([["o to 3", "0-3"], ["3 to 6", "3-6"], ["6 to 9", "6-9"]]), "Range")
+        .appendField("cm on pin")
+        .appendField(new Blockly.FieldDropdown([["A0", "A0"], ["A1", "A1"]]), "pin_options");
+    this.appendStatementInput("Do")
+        .appendField("Do");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(Blockly.Blocks.khelo.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
 Blockly.Blocks['khelo_keyboard'] = {
   init: function() {
     this.appendDummyInput()
